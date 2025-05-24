@@ -2,12 +2,15 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
 const postRouter = require('./routes/postRoutes');
 
 const app = express();
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public'))); // Auto correct the path name (missing or redundant '/')
+
 // Middleware to parse JSON bodies
 app.use(express.json({ limit: '10kb' }));
 // Reading data from the urlencoded form into req.body
@@ -21,5 +24,12 @@ if (process.env.NODE_ENV === 'development') {
 // Routes
 // must have '/' first
 app.use('/api/v1/posts', postRouter);
+
+// Error handling middleware (must use regex in Express v5)
+app.all(/(.*)/, (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(globalErrorHandler);
 
 module.exports = app;
