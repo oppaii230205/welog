@@ -34,7 +34,7 @@ const postSchema = new mongoose.Schema(
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
-      // required: [true, 'A post must have an author'] //TODO
+      // required: [true, 'A post must have an author'] //TODO:
     },
     tags: [String],
     comments: [
@@ -79,7 +79,7 @@ postSchema.pre('save', function(next) {
   next();
 });
 
-// 3. Virtual propertiy for comment count
+// 3. Virtual property for comment count
 postSchema.virtual('commentCount').get(function() {
   return this.comments.length || 0;
 });

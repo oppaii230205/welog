@@ -1,0 +1,9 @@
+// Alert messages
+if messages.error
+  .alert.alert-danger.alert-dismissible.fade.show.animate__animated.animate__fadeIn(role="alert")
+    span= messages.error
+    button.btn-close(type="button", data-bs-dismiss="alert")
+if messages.success
+  .alert.alert-success.alert-dismissible.fade.show.animate__animated.animate__fadeIn(role="alert")
+    span= messages.success
+    button.btn-close(type="button", data-bs-dismiss="alert")

@@ -1,0 +1,51 @@
+extends layouts/main
+
+block content
+  .container.mt-5.pt-4
+    article.post-detail
+      //- Post Header
+      header.mb-4
+        h1.display-4.fw-bold= post.title
+        .d-flex.align-items-center.mt-3
+          img.rounded-circle.me-2(
+            src=`/img/users/${post.author.photo || 'default.jpg'}`,
+            width="40"
+          )
+          div
+            p.mb-0.fw-bold= post.author.name
+            small.text-muted= post.createdAt.toLocaleDateString()
+
+      //- Cover Image
+      img.img-fluid.rounded.mb-4(
+        src=`/img/posts/${post.coverImage || 'default.jpg'}`,
+        alt=post.title
+      )
+
+      //- Content
+      .post-content.mb-5 !{post.content}
+
+      //- Comments Section (with AJAX)
+      section.comments.mb-5
+        h3.mb-4 
+          i.bi.bi-chat-left-text.me-2
+          | Comments
+        if user
+          form#comment-form.mb-4(data-post-id=post._id)
+            textarea.form-control.mb-2(
+              name="content",
+              placeholder="Add a comment...",
+              required
+            )
+            button.btn.btn-primary(type="submit") Post Comment
+        #comments-list
+          each comment in post.comments
+            .card.mb-3
+              .card-body
+                .d-flex
+                  img.rounded-circle.me-3(
+                    src=`/img/users/${comment.author.photo || 'default.jpg'}`,
+                    width="40"
+                  )
+                  div
+                    h6.mb-1= comment.author.name
+                    p.mb-0= comment.content

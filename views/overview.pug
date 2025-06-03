@@ -1,0 +1,27 @@
+extends layouts/main
+
+block content
+  .container.mt-5.pt-4
+    //- Hero Section
+    section.hero-section.mb-5.text-center
+      h1.display-4.fw-bold.mb-3.animate__animated.animate__fadeIn Welcome to Welog
+      p.lead.mb-4 Share your stories with the world.
+      if user
+        a.btn.btn-primary.btn-lg(href="/posts/new") Create Post
+
+    //- Post Grid
+    .row.g-4
+      each post in posts
+        .col-md-6.col-lg-4
+          .card.h-100.shadow-sm.animate__animated.animate__fadeInUp
+            img.card-img-top(
+              src=`/img/posts/${post.coverImage || 'default.jpg'}`,
+              alt=post.title
+            )
+            .card-body
+              h5.card-title= post.title
+              p.card-text.text-muted= post.excerpt || post.content.substring(0, 100) + '...'
+            .card-footer.bg-transparent
+              .d-flex.justify-content-between.align-items-center
+                small.text-muted= post.author.name
+                a.btn.btn-sm.btn-outline-primary(href=`/post/${post.slug}`) Read More
