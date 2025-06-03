@@ -1,0 +1,90 @@
+[
+  {
+    "_id": "5c88fa8cf4afda39709c2955",
+    "title": "Getting Started with Node.js",
+    "content": "Node.js is a powerful JavaScript runtime built on Chrome's V8 JavaScript engine. It allows you to build scalable network applications using JavaScript on the server-side. In this post, we'll cover the basics of setting up a Node.js project, creating your first server, and understanding the event-driven architecture that makes Node.js so efficient for I/O-heavy applications.",
+    "excerpt": "Node.js is a powerful JavaScript runtime built on Chrome's V8 JavaScript engine. It allows you to build scalable network applications using JavaScript on the server-side... + ...",
+    "coverImage": "nodejs-cover.jpg",
+    "author": "5c8a1d5b0190b214360dc057",
+    "tags": ["nodejs", "backend", "javascript"],
+    "comments": [],
+    "likes": [],
+    "views": 125,
+    "createdAt": "2023-01-15T10:00:00.000Z",
+    "updatedAt": "2023-01-16T08:30:00.000Z"
+  },
+  {
+    "_id": "5c88fa8cf4afda39709c2956",
+    "title": "MongoDB Best Practices",
+    "content": "MongoDB is a popular NoSQL database that offers high performance, high availability, and easy scalability. In this article, we'll discuss schema design patterns, indexing strategies, and query optimization techniques to get the most out of your MongoDB deployment. We'll also cover common pitfalls to avoid when working with document databases.",
+    "excerpt": "MongoDB is a popular NoSQL database that offers high performance, high availability, and easy scalability. In this article, we'll discuss schema design patterns... + ...",
+    "coverImage": "mongodb-cover.jpg",
+    "author": "5c8a1dfa2f8fb814b56fa181",
+    "tags": ["mongodb", "database", "nosql"],
+    "comments": [],
+    "likes": ["5c8a1e1a2f8fb814b56fa182", "5c8a1ec62f8fb814b56fa183"],
+    "views": 89,
+    "createdAt": "2023-02-20T14:30:00.000Z",
+    "updatedAt": "2023-02-22T09:15:00.000Z"
+  },
+  {
+    "_id": "5c88fa8cf4afda39709c2957",
+    "title": "Building RESTful APIs with Express",
+    "content": "Express.js is the most popular web framework for Node.js, and for good reason. It's minimal, flexible, and provides a robust set of features for building web applications and APIs. In this tutorial, we'll walk through creating a complete RESTful API with Express, including proper route organization, middleware usage, error handling, and authentication.",
+    "excerpt": "Express.js is the most popular web framework for Node.js, and for good reason. It's minimal, flexible, and provides a robust set of features for building web applications... + ...",
+    "coverImage": "express-cover.jpg",
+    "author": "5c8a1f292f8fb814b56fa184",
+    "tags": ["express", "api", "backend"],
+    "comments": [],
+    "likes": ["5c8a1d5b0190b214360dc057"],
+    "views": 210,
+    "createdAt": "2023-03-10T09:15:00.000Z",
+    "updatedAt": "2023-03-12T11:20:00.000Z"
+  },
+  {
+    "_id": "5c88fa8cf4afda39709c2958",
+    "title": "Authentication in Node.js Applications",
+    "content": "Security is crucial for any application, and authentication is the first line of defense. This post covers various authentication strategies for Node.js applications, including session-based authentication, JWT (JSON Web Tokens), and OAuth. We'll implement each approach and discuss their pros and cons to help you choose the right solution for your project.",
+    "excerpt": "Security is crucial for any application, and authentication is the first line of defense. This post covers various authentication strategies for Node.js applications... + ...",
+    "coverImage": "auth-cover.jpg",
+    "author": "5c8a1f4e2f8fb814b56fa185",
+    "tags": ["authentication", "security", "jwt"],
+    "comments": [],
+    "likes": [
+      "5c8a1dfa2f8fb814b56fa181",
+      "5c8a1e1a2f8fb814b56fa182",
+      "5c8a1ec62f8fb814b56fa183"
+    ],
+    "views": 156,
+    "createdAt": "2023-04-05T11:45:00.000Z",
+    "updatedAt": "2023-04-07T16:10:00.000Z"
+  },
+  {
+    "_id": "5c88fa8cf4afda39709c2959",
+    "title": "Testing Node.js Applications",
+    "content": "Writing tests is an essential part of developing reliable applications. In this guide, we'll explore different testing approaches for Node.js applications, including unit tests, integration tests, and end-to-end tests. We'll use popular testing frameworks like Mocha and Jest, and learn how to mock dependencies and test asynchronous code effectively.",
+    "excerpt": "Writing tests is an essential part of developing reliable applications. In this guide, we'll explore different testing approaches for Node.js applications... + ...",
+    "coverImage": "testing-cover.jpg",
+    "author": "5c8a201e2f8fb814b56fa186",
+    "tags": ["testing", "mocha", "jest"],
+    "comments": [],
+    "likes": ["5c8a1f292f8fb814b56fa184"],
+    "views": 78,
+    "createdAt": "2023-05-12T13:20:00.000Z",
+    "updatedAt": "2023-05-14T10:05:00.000Z"
+  },
+  {
+    "_id": "5c88fa8cf4afda39709c2960",
+    "title": "Deploying Node.js Applications",
+    "content": "Once your application is ready, you need to deploy it to a production environment. This post compares different deployment options for Node.js applications, including traditional servers, containers (Docker), and serverless platforms. We'll walk through deployment processes for each option and discuss considerations like scalability, cost, and maintenance.",
+    "excerpt": "Once your application is ready, you need to deploy it to a production environment. This post compares different deployment options for Node.js applications... + ...",
+    "coverImage": "deployment-cover.jpg",
+    "author": "5c8a20d32f8fb814b56fa187",
+    "tags": ["deployment", "docker", "serverless"],
+    "comments": [],
+    "likes": ["5c8a1f4e2f8fb814b56fa185", "5c8a201e2f8fb814b56fa186"],
+    "views": 142,
+    "createdAt": "2023-06-18T15:10:00.000Z",
+    "updatedAt": "2023-06-20T12:30:00.000Z"
+  }
+]

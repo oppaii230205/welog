@@ -1,0 +1,38 @@
+// Variables
+$primary: #0d6efd;
+$dark: #212529;
+
+// Custom styles
+body {
+  padding-top: 56px; // Offset for fixed navbar
+  background-color: #f8f9fa;
+}
+
+.hero-section {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, rgba($primary, 0.1) 0%, transparent 100%);
+  border-radius: 1rem;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.post-content {
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+  }
+}
+
+// Responsive tweaks
+//@include media-breakpoint-down(md) {
+//  .hero-section {
+//    padding: 2rem 0;
+//  }
+//}
