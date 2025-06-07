@@ -28,3 +28,9 @@ exports.getPost = catchAsync(async (req, res, next) => {
     post
   });
 });
+
+exports.getLoginForm = (req, res, next) => {
+  res.status(200).render('login', {
+    title: 'Login to your account'
+  });
+};

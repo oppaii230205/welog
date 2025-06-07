@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -20,7 +21,7 @@ app.set('views', path.join(__dirname, 'views')); // Set the views directory for 
 
 // GLOBAL MIDDLEWARES
 // Set security HTTP headers
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false })); // otherwise we cannot use axios cdn
 
 // Logging middleware for development
 if (process.env.NODE_ENV === 'development') {
@@ -39,8 +40,11 @@ app.use('/api', limiter);
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public'))); // Auto correct the path name (missing or redundant '/')
 
-// Middleware to parse JSON bodies
+// Middleware to parse JSON bodies (Body Parser)
 app.use(express.json({ limit: '10kb' }));
+
+// Cookie Parser middleware to parse cookies
+app.use(cookieParser());
 
 // TODO: All the following middlewares will cause errors because of Express v5 changes
 // Data sanitization against NoSQL query injection

@@ -31,7 +31,7 @@ mongoose
   .then(() => console.log('DB connection successful!'));
 
 // Start the server
-console.log(`Running in ${process.env.NODE_ENV || 'development'} mode`);
+console.log(`Running in ${process.env.NODE_ENV} mode`);
 
 const server = app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

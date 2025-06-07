@@ -1,0 +1,56 @@
+extends layouts/main
+
+block content
+  .container.mt-5
+    .row.justify-content-center
+      .col-md-6.col-lg-5
+        .card.shadow.animate__animated.animate__fadeIn
+          .card-body.p-5
+            h2.text-center.mb-4 
+              i.bi.bi-box-arrow-in-right.me-2
+              | Login
+
+            //- Login Form
+            form.form(action="/login", method="POST")
+              .mb-3
+                label.form-label(for="email") Email
+                input#email.form-control(
+                  type="email",
+                  name="email",
+                  required,
+                  placeholder="you@example.com"
+                )
+
+              .mb-4
+                label.form-label(for="password") Password
+                input#password.form-control(
+                  type="password",
+                  name="password",
+                  required,
+                  placeholder="••••••••"
+                )
+                .form-text.text-end
+                  a.text-decoration-none(href="/forgot-password") Forgot password?
+
+              .d-grid.mb-3
+                button.btn.btn-primary.btn-lg(type="submit", id="login-btn")
+                  span#login-text
+                    i.bi.bi-box-arrow-in-right.me-2
+                    | Login
+                  span#login-spinner.spinner-border.spinner-border-sm.ms-2.d-none
+
+              .text-center
+                p.mb-0 
+                  | Don't have an account? 
+                  a.text-decoration-none(href="/signup") Sign up
+
+            //- Social Login (Optional)
+            //- .mt-4.pt-3.border-top
+            //-   p.text-center.text-muted.mb-3 Or login with
+            //-   .d-flex.justify-content-center.gap-3
+            //-     a.btn.btn-outline-danger(href="/auth/google")
+            //-       i.bi.bi-google.me-2
+            //-       | Google
+            //-     a.btn.btn-outline-dark(href="/auth/github")
+            //-       i.bi.bi-github.me-2
+            //-       | GitHub
