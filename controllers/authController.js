@@ -66,15 +66,29 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
+exports.logout = (req, res, next) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000), // Set cookie to expire in 10 seconds
+    httpOnly: true
+  });
+
+  res.status(200).json({
+    status: 'success'
+  });
+};
+
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Get token and check whether it exists
   let token;
 
+  // Check for token in the Authorization header (API - Postman) or cookies (real browser)
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
@@ -108,8 +122,43 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser; // Attach the user to the request object
+  res.locals.user = currentUser; // Make the user available in the templates
   next();
 });
+
+// Only for renderd pages, no errors!
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.cookies.jwt) {
+    try {
+      // 1) Verify token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      ); // jwt.verify is a synchronous function, so we use promisify to convert it to a promise-based function
+
+      // console.log(decoded);
+
+      // 2) Check if user still exists
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) {
+        return next();
+      }
+
+      // 3) Check if user changed password after the token was issued
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next();
+      }
+
+      // THERE IS A LOGGED IN USER
+      res.locals.user = currentUser; // Make the user available in the templates
+      return next();
+    } catch (err) {
+      // If there is an error (e.g. token is invalid), we just ignore it and continue
+      return next();
+    }
+  }
+  next();
+};
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {

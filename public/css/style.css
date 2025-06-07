@@ -2,15 +2,13 @@ body {
   padding-top: 56px;
   background-color: #f8f9fa;
 }
+
 .hero-section {
   padding: 4rem 0;
-  background: linear-gradient(
-    135deg,
-    rgba(13, 110, 253, 0.1) 0%,
-    transparent 100%
-  );
+  background: linear-gradient(135deg, rgba(13, 110, 253, 0.1) 0%, transparent 100%);
   border-radius: 1rem;
 }
+
 .card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -18,8 +16,52 @@ body {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
+
 .post-content img {
   max-width: 100%;
   height: auto;
   border-radius: 0.5rem;
 }
+
+.login-card {
+  max-width: 450px;
+  margin: 0 auto;
+}
+.login-card .form-control {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+.login-card .btn-social {
+  transition: all 0.3s;
+}
+.login-card .btn-social:hover {
+  transform: translateY(-2px);
+}
+
+.alert {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: 9999;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 400;
+  text-align: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 1.6rem 15rem;
+  -webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+}
+
+.alert--success {
+  background-color: #20bf6b;
+}
+
+.alert--error {
+  background-color: #eb4d4b;
+}
+
+/*# sourceMappingURL=style.css.map */

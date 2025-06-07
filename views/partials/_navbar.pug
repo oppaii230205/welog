@@ -20,12 +20,12 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
               data-bs-toggle="dropdown"
             ) 
               img.rounded-circle.me-2(src=`/img/users/${user.photo}`, width="30")
-              | #{user.name}
+              | #{user.name.split(' ')[0]}
             ul.dropdown-menu.dropdown-menu-end
               li
                 a.dropdown-item(href="/profile") Profile
               li
-                a.dropdown-item(href="/logout") Logout
+                a#logout.dropdown-item Logout
         else
           a.btn.btn-outline-light.me-2(href="/login") Login
           a.btn.btn-primary(href="/signup") Sign Up
