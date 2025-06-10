@@ -24,28 +24,86 @@ block content
       //- Content
       .post-content.mb-5 !{post.content}
 
-      //- Comments Section (with AJAX)
-      section.comments.mb-5
-        h3.mb-4 
-          i.bi.bi-chat-left-text.me-2
-          | Comments
+      //- Enhanced Comments Section
+      section.comments.mt-5.pt-4.border-top
+        .d-flex.justify-content-between.align-items-center.mb-4
+          h2
+            i.bi.bi-chat-square-text.me-2
+            | Discussion (#{post.comments.length})
+          if user
+            button.btn.btn-sm.btn-outline-primary(
+              type="button",
+              data-bs-toggle="collapse",
+              data-bs-target="#commentFormCollapse"
+            ) Add Comment
+
+        //- Comment Form (Collapsible)
         if user
-          form#comment-form.mb-4(data-post-id=post._id)
-            textarea.form-control.mb-2(
-              name="content",
-              placeholder="Add a comment...",
-              required
-            )
-            button.btn.btn-primary(type="submit") Post Comment
-        #comments-list
-          each comment in post.comments
-            .card.mb-3
-              .card-body
-                .d-flex
-                  img.rounded-circle.me-3(
-                    src=`/img/users/${comment.author.photo || 'default.jpg'}`,
-                    width="40"
+          .collapse.mb-4(id="commentFormCollapse")
+            .card.card-body.border-0.shadow-sm
+              .d-flex
+                img.rounded-circle.me-3(
+                  src=`/img/users/${user.photo || 'default.jpg'}`,
+                  width="48",
+                  height="48",
+                  alt=user.name,
+                  onerror="this.src='/img/users/default.jpg'"
+                )
+                form#comment-form.w-100(data-post-id=post._id)
+                  textarea.form-control.mb-3(
+                    name="content",
+                    rows="3",
+                    placeholder="Share your thoughts...",
+                    required
                   )
-                  div
-                    h6.mb-1= comment.author.name
-                    p.mb-0= comment.content
+                  .d-flex.justify-content-end
+                    button.btn.btn-primary.px-4(
+                      type="submit",
+                      id="comment-submit-btn"
+                    )
+                      span.me-2 Post Comment
+                      i.bi.bi-send
+
+        //- Comments List
+        #comments-list
+          if post.comments.length > 0
+            each comment in post.comments
+              //-console.log(comment.user._id, user._id)
+              .card.mb-3.border-0.shadow-sm
+                .card-body
+                  .d-flex
+                    img.rounded-circle.me-3(
+                      src=`/img/users/${comment.user.photo || 'default.jpg'}`,
+                      width="48",
+                      height="48",
+                      alt=comment.user.name,
+                      onerror="this.src='/img/users/default.jpg'"
+                    )
+                    div.w-100
+                      .d-flex.justify-content-between
+                        div
+                          h6.mb-1.fw-bold= comment.user.name
+                          small.text-muted= comment.formattedDate
+                        if user && user._id.toString() === comment.user._id.toString()
+                          .dropdown
+                            button.btn.btn-sm.btn-link.dropdown-toggle(
+                              type="button",
+                              data-bs-toggle="dropdown",
+                              aria-expanded="false",
+                              style="width: 24px; height: 24px; padding: 0; display: flex; align-items: center; justify-content: center;"
+                            )
+                              i.bi.bi-three-dots(style="font-size: 1.2rem; color: #6c757d")
+                            ul.dropdown-menu.dropdown-menu-end
+                              li
+                                button.dropdown-item.edit-comment-btn
+                                  i.bi.bi-pencil.me-2
+                                  | Edit
+                              li
+                                button.dropdown-item.delete-comment-btn
+                                  i.bi.bi-trash.me-2
+                                  | Delete
+                      .mt-2.comment-content= comment.content
+          else
+            .text-center.py-4.text-muted
+              i.bi.bi-chat-square-text.display-6.mb-3
+              p.fs-5 No comments yet. Be the first to share your thoughts!

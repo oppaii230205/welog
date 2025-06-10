@@ -37,12 +37,6 @@ const postSchema = new mongoose.Schema(
       // required: [true, 'A post must have an author'] //TODO:
     },
     tags: [String],
-    comments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment'
-      }
-    ],
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -79,9 +73,11 @@ postSchema.pre('save', function(next) {
   next();
 });
 
-// 3. Virtual property for comment count
-postSchema.virtual('commentCount').get(function() {
-  return this.comments.length || 0;
+// 3. Virtual populate for comments: we still need to populate the comments manually in the controller, it's just a way to link the comments to the post (as if we use child referencing, currently we use parent referencing) (e.g. in the getPost function in the postController.js, not in getAllPosts function because we do not want to populate comments when querying all posts, which would be inefficient)
+postSchema.virtual('comments', {
+  ref: 'Comment',
+  foreignField: 'post',
+  localField: '_id'
 });
 
 // 4. Query middleware to populate author

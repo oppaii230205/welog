@@ -64,4 +64,53 @@ body {
   background-color: #eb4d4b;
 }
 
+.comments .comment-content {
+  white-space: pre-line;
+  word-break: break-word;
+}
+.comments .dropdown-toggle::after {
+  display: none;
+}
+
+.collapsing {
+  transition: height 0.2s ease;
+}
+
+.comment-dropdown .dropdown-toggle {
+  /* Visible button styles */
+  background: rgba(0, 0, 0, 0.05) !important;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1 !important;
+}
+.comment-dropdown .dropdown-toggle::after {
+  display: none; /* Hide default Bootstrap caret */
+}
+.comment-dropdown .dropdown-toggle:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+.comment-dropdown .dropdown-toggle i {
+  font-size: 16px;
+  color: #6c757d !important; /* Bootstrap's text-muted color */
+}
+.comment-dropdown .dropdown-menu {
+  min-width: 8rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border: none;
+}
+.comment-dropdown .dropdown-menu .dropdown-item {
+  padding: 0.25rem 1rem;
+  font-size: 0.875rem;
+}
+.comment-dropdown .dropdown-menu .dropdown-item:hover {
+  background-color: rgba(13, 110, 253, 0.1);
+}
+.comment-dropdown .dropdown-menu .dropdown-item i {
+  width: 1.25em;
+  text-align: center;
+}
+
 /*# sourceMappingURL=style.css.map */
