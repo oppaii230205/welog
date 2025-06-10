@@ -12,6 +12,7 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const postRouter = require('./routes/postRoutes');
 const userRouter = require('./routes/userRoutes');
+const commentRouter = require('./routes/commentRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
@@ -65,6 +66,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use('/', viewRouter);
 app.use('/api/v1/posts', postRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/comments', commentRouter);
 
 // Error handling middleware (must use regex in Express v5)
 app.all(/(.*)/, (req, res, next) => {

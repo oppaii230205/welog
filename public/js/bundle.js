@@ -12604,7 +12604,7 @@ var showAlert = exports.showAlert = function showAlert(type, message) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logout = exports.login = void 0;
+exports.signup = exports.logout = exports.login = void 0;
 var _axios = _interopRequireDefault(require("axios"));
 var _alerts = require("./alerts");
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -12685,6 +12685,48 @@ var logout = exports.logout = /*#__PURE__*/function () {
   }));
   return function logout() {
     return _ref2.apply(this, arguments);
+  };
+}();
+var signup = exports.signup = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(name, email, password, passwordConfirm) {
+    var res;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.prev = 0;
+          _context3.next = 3;
+          return (0, _axios.default)({
+            method: 'POST',
+            url: 'http://127.0.0.1:3000/api/v1/users/signup',
+            data: {
+              name: name,
+              email: email,
+              password: password,
+              passwordConfirm: passwordConfirm
+            }
+          });
+        case 3:
+          res = _context3.sent;
+          if (res.data.status === 'success') {
+            (0, _alerts.showAlert)('success', 'Signed up successfully!');
+            window.setTimeout(function () {
+              location.assign('/');
+            }, 1500);
+          }
+          _context3.next = 10;
+          break;
+        case 7:
+          _context3.prev = 7;
+          _context3.t0 = _context3["catch"](0);
+          (0, _alerts.showAlert)('error', _context3.t0.response.data.message);
+        case 10:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3, null, [[0, 7]]);
+  }));
+  return function signup(_x3, _x4, _x5, _x6) {
+    return _ref3.apply(this, arguments);
   };
 }();
 },{"axios":"../../node_modules/axios/index.js","./alerts":"alerts.js"}],"index.js":[function(require,module,exports) {
@@ -12825,7 +12867,8 @@ var _login = require("./login");
 // index.js is the entry point for the client side JavaScript. It usually imports other modules (delegating the actions into thes modules) and sets up event listeners for the DOM.
 
 // DOM ELEMENTS
-var loginForm = document.querySelector('.form');
+var loginForm = document.querySelector('.form-login');
+var signupForm = document.querySelector('.form-signup');
 var logoutBtn = document.getElementById('logout');
 
 // DELEGATION
@@ -12835,6 +12878,16 @@ if (loginForm) {
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
     (0, _login.login)(email, password);
+  });
+}
+if (signupForm) {
+  signupForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var passwordConfirm = document.getElementById('passwordConfirm').value;
+    (0, _login.signup)(name, email, password, passwordConfirm);
   });
 }
 if (logoutBtn) {
@@ -12865,7 +12918,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58097" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59757" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

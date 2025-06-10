@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Post = require('./../../models/Post');
 const User = require('./../../models/User');
+const Comment = require('./../../models/Comment');
 
 dotenv.config({ path: './config.env' });
 
@@ -40,6 +41,7 @@ const deleteData = async () => {
   try {
     await Post.deleteMany();
     await User.deleteMany();
+    await Comment.deleteMany();
     console.log('Data successfully deleted!');
   } catch (err) {
     console.log(err);
@@ -52,3 +54,8 @@ if (process.argv[2] === '--import') {
 } else if (process.argv[2] === '--delete') {
   deleteData();
 }
+
+// Command to run the script:
+// node .\dev-data\data\import-dev-data.js --import
+// or
+// node .\dev-data\data\import-dev-data.js --delete

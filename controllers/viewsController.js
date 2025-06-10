@@ -17,11 +17,24 @@ exports.getOverview = catchAsync(async (req, res, next) => {
 });
 
 exports.getPost = catchAsync(async (req, res, next) => {
-  const post = await Post.findOne({ slug: req.params.slug });
+  const post = await Post.findOne({ slug: req.params.slug }).populate({
+    path: 'comments'
+  });
 
   if (!post) {
     return next(new AppError('There is no post with that name', 404));
   }
+
+  // Format the date for each comment before rendering (because Pug does not support complex JavaScript expressions)
+  post.comments.forEach(comment => {
+    comment.formattedDate = comment.createdAt.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  });
 
   res.status(200).render('post', {
     title: post.title,
@@ -32,5 +45,11 @@ exports.getPost = catchAsync(async (req, res, next) => {
 exports.getLoginForm = (req, res, next) => {
   res.status(200).render('login', {
     title: 'Login to your account'
+  });
+};
+
+exports.getSignupForm = (req, res, next) => {
+  res.status(200).render('signup', {
+    title: 'Create your account'
   });
 };
