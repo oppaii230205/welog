@@ -113,4 +113,16 @@ body {
   text-align: center;
 }
 
+.comment-edit-form {
+  transition: all 0.3s ease;
+}
+.comment-edit-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+[data-comment-id] {
+  white-space: pre-line;
+}
+
 /*# sourceMappingURL=style.css.map */

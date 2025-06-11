@@ -137,6 +137,19 @@ body {
   }
 }
 
+.comment-edit-form {
+  transition: all 0.3s ease;
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+}
+
+[data-comment-id] {
+  white-space: pre-line; // Preserve line breaks
+}
+
 // Responsive tweaks
 // @include media-breakpoint-down(md) {
 //   .hero-section {

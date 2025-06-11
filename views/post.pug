@@ -49,7 +49,7 @@ block content
                   alt=user.name,
                   onerror="this.src='/img/users/default.jpg'"
                 )
-                form#comment-form.w-100(data-post-id=post._id)
+                form.form-comment.w-100(data-post-id=post._id)
                   textarea.form-control.mb-3(
                     name="content",
                     rows="3",
@@ -95,14 +95,30 @@ block content
                               i.bi.bi-three-dots(style="font-size: 1.2rem; color: #6c757d")
                             ul.dropdown-menu.dropdown-menu-end
                               li
-                                button.dropdown-item.edit-comment-btn
+                                button.dropdown-item.btn-edit-comment(data-comment-id=comment._id)
                                   i.bi.bi-pencil.me-2
                                   | Edit
                               li
-                                button.dropdown-item.delete-comment-btn
+                                button.dropdown-item.btn-delete-comment(data-comment-id=comment._id)
                                   i.bi.bi-trash.me-2
                                   | Delete
-                      .mt-2.comment-content= comment.content
+                      //- Comment Content (Display Mode)
+                      .comment-content(
+                        data-comment-id=comment._id
+                      )= comment.content
+
+                      //- Edit Form (Hidden Initially)
+                      form.form-comment-edit.d-none(
+                        data-comment-id=comment._id
+                        data-post-id=post._id
+                      )
+                        textarea.form-control.mb-2(
+                          name="content",
+                          rows="3"
+                        )= comment.content
+                        .d-flex.gap-2
+                          button.btn.btn-primary.btn-sm.btn-save-edit(type="submit" data-comment-id=comment._id) Save
+                          button.btn.btn-outline-secondary.btn-sm.btn-cancel-edit(type="button" data-comment-id=comment._id) Cancel
           else
             .text-center.py-4.text-muted
               i.bi.bi-chat-square-text.display-6.mb-3
