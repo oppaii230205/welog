@@ -2,8 +2,21 @@ const Comment = require('../models/Comment');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
+exports.setPostUserIds = (req, res, next) => {
+  // Allow nested routes
+  if (!req.body.post) req.body.post = req.params.postId;
+  if (!req.body.user) req.body.user = req.user._id;
+
+  next();
+};
+
 exports.getAllComments = catchAsync(async (req, res, next) => {
-  const comments = await Comment.find();
+  let filter = {};
+
+  if (req.params.postId) filter = { post: req.params.postId };
+
+  // Find all comments, optionally filtered by postId
+  const comments = await Comment.find(filter);
 
   res.status(200).json({
     status: 'success',
