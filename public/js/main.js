@@ -1,5 +1,5 @@
 /* eslint-disable */
-
+// do not use this file
 // AJAX for comments
 document.getElementById('comment-form')?.addEventListener('submit', async e => {
   e.preventDefault();

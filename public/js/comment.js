@@ -7,7 +7,7 @@ export const postComment = async (content, postId) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: `http://127.0.0.1:3000/api/v1/posts/${postId}/comments`,
+      url: `/api/v1/posts/${postId}/comments`,
       data: {
         content
       }
@@ -29,7 +29,7 @@ export const deleteComment = async commentId => {
   try {
     const res = await axios({
       method: 'DELETE',
-      url: `http://127.0.0.1:3000/api/v1/comments/${commentId}`
+      url: `/api/v1/comments/${commentId}`
     });
 
     // console.log(res); // Why res.data.status is not working? res.data is null now
@@ -50,7 +50,7 @@ export const editComment = async (commentId, content) => {
   try {
     const res = await axios({
       method: 'PATCH',
-      url: `http://127.0.0.1:3000/api/v1/comments/${commentId}`,
+      url: `/api/v1/comments/${commentId}`,
       data: {
         content
       }

@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression'); // deployment optimization for serving compressed responses
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -59,6 +60,9 @@ app.use(cookieParser());
 
 // Reading data from the urlencoded form into req.body
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
+// Compression middleware to compress responses
+app.use(compression());
 
 // Routes
 // must have '/' first
