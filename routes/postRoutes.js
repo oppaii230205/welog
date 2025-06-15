@@ -9,7 +9,7 @@ router.use('/:postId/comments', commentRouter);
 
 router
   .route('/')
-  .get(authController.protect, postController.getAllPosts)
+  .get(postController.getAllPosts)
   .post(
     authController.protect,
     postController.uploadCoverImage,
