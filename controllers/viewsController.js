@@ -53,3 +53,10 @@ exports.getSignupForm = (req, res, next) => {
     title: 'Create your account'
   });
 };
+
+exports.getAccount = (req, res, next) => {
+  res.status(200).render('account', {
+    title: 'Your Account'
+    // user: req.user // authController already set res.locals.user
+  });
+};
