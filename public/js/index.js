@@ -4,11 +4,16 @@
 import '@babel/polyfill';
 import { login, logout, signup } from './login';
 import { postComment, deleteComment, editComment } from './comment';
+import { updateSettings, deleteAccount } from './updateSettings';
 
 // DOM ELEMENTS
 const loginForm = document.querySelector('.form-login');
 const signupForm = document.querySelector('.form-signup');
 const commentForm = document.querySelector('.form-comment');
+const userProfileForm = document.querySelector('.form-profile');
+const userPasswordForm = document.querySelector('.form-password');
+const deleteAccountForm = document.querySelector('.form-delete-account');
+const avatarUploadForm = document.querySelector('.form-avatar-upload');
 
 const logoutBtn = document.getElementById('logout');
 
@@ -41,7 +46,7 @@ if (logoutBtn) {
   logoutBtn.addEventListener('click', logout);
 }
 
-// ===== COMMENT HANDLING
+// ===== COMMENT HANDLING =====
 if (commentForm) {
   commentForm.addEventListener('submit', e => {
     e.preventDefault();
@@ -134,5 +139,81 @@ if (commentsList) {
 
     saveBtn.disabled = false;
     saveBtn.textContent = 'Save';
+  });
+}
+
+// ===== USER PROFILE HANDLING =====
+if (userProfileForm) {
+  userProfileForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+
+    updateSettings({ name, email }, 'data');
+  });
+}
+
+if (userPasswordForm) {
+  userPasswordForm.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const passwordCurrent = document.getElementById('passwordCurrent').value;
+    const password = document.getElementById('passwordNew').value;
+    const passwordConfirm = document.getElementById('passwordConfirm').value;
+
+    const saveBtn = userPasswordForm.querySelector('.btn--save-password');
+    saveBtn.disabled = true;
+    saveBtn.innerHTML =
+      '<span class="spinner-border spinner-border-sm"></span> Saving...';
+
+    await updateSettings(
+      { passwordCurrent, password, passwordConfirm },
+      'password'
+    );
+
+    saveBtn.disabled = false;
+    saveBtn.textContent = 'Save Password';
+    document.getElementById('passwordCurrent').value = '';
+    document.getElementById('passwordNew').value = '';
+    document.getElementById('passwordConfirm').value = '';
+  });
+}
+
+if (deleteAccountForm) {
+  deleteAccountForm.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const password = document.getElementById('deletePassword').value;
+
+    const deleteBtn = deleteAccountForm.querySelector('.btn--delete-account');
+    deleteBtn.disabled = true;
+    deleteBtn.innerHTML =
+      '<span class="spinner-border spinner-border-sm"></span> Deleting...';
+
+    await deleteAccount(password);
+
+    deleteBtn.disabled = false;
+    deleteBtn.textContent = 'Delete Account';
+  });
+}
+
+if (avatarUploadForm) {
+  avatarUploadForm.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    // Mannually create a FormData object (so do not need to specify enctype="multipart/form-data" in the form)
+    const formData = new FormData();
+    formData.append('photo', document.getElementById('photo').files[0]);
+
+    const saveBtn = avatarUploadForm.querySelector('.btn--save-photo');
+    saveBtn.disabled = true;
+    saveBtn.innerHTML =
+      '<span class="spinner-border spinner-border-sm"></span> Uploading...';
+
+    await updateSettings(formData, 'data');
+
+    saveBtn.disabled = false;
+    saveBtn.textContent = 'Upload';
   });
 }

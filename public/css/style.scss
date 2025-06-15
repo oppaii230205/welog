@@ -150,6 +150,43 @@ body {
   white-space: pre-line; // Preserve line breaks
 }
 
+/* Account Page Styles */
+#avatar-preview {
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.list-group-item {
+  transition: all 0.2s ease;
+
+  &.active {
+    font-weight: 500;
+  }
+}
+
+.tab-pane {
+  padding: 1.5rem;
+}
+
+.card.border-danger {
+  border-width: 2px;
+
+  .card-header {
+    font-weight: 500;
+  }
+}
+
+/* Modal tweaks */
+.modal-body {
+  img.preview {
+    max-width: 100%;
+    max-height: 200px;
+    display: block;
+    margin: 0 auto 1rem;
+  }
+}
+
 // Responsive tweaks
 // @include media-breakpoint-down(md) {
 //   .hero-section {

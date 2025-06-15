@@ -1,0 +1,139 @@
+extends layouts/main
+
+block content
+  .container.my-5
+    .row
+      //- Sidebar Navigation
+      .col-md-4.mb-4
+        .card.shadow-sm
+          .card-body.text-center
+            img.rounded-circle.mb-3(
+              src=`/img/users/${user.photo || 'default.jpg'}`,
+              width="150",
+              height="150",
+              alt=user.name,
+              id="avatar-preview",
+              onerror="this.src='/img/users/default.jpg'"
+            )
+            h5= user.name
+            p.text-muted= user.email
+            button.btn.btn-outline-primary.btn-sm.mt-2(
+              type="button",
+              data-bs-toggle="modal",
+              data-bs-target="#avatarModal"
+            ) Change Photo
+
+          .list-group.list-group-flush
+            a.list-group-item.list-group-item-action.active(href="#profile-tab", data-bs-toggle="tab") Profile
+            a.list-group-item.list-group-item-action(href="#password-tab", data-bs-toggle="tab") Password
+
+      //- Main Content
+      .col-md-8
+        .card.shadow-sm
+          .card-body
+            .tab-content
+              //- Profile Tab
+              #profile-tab.tab-pane.fade.show.active
+                h4.card-title.mb-4 Profile Settings
+                form.form-profile(action="/account/profile", method="POST", enctype="multipart/form-data")
+                  .mb-3
+                    label.form-label(for="name") Full Name
+                    input#name.form-control(
+                      type="text",
+                      name="name",
+                      value=user.name,
+                      required
+                    )
+                  .mb-3
+                    label.form-label(for="email") Email
+                    input#email.form-control(
+                      type="email",
+                      name="email",
+                      value=user.email,
+                      required
+                    )
+                  .d-grid.gap-2
+                    button.btn.btn-primary(type="submit") Update Profile
+
+              //- Password Tab
+              #password-tab.tab-pane.fade
+                h4.card-title.mb-4 Change Password
+                form.form-password(action="/account/password", method="POST")
+                  .mb-3
+                    label.form-label(for="passwordCurrent") Current Password
+                    input#passwordCurrent.form-control(
+                      type="password",
+                      name="currentPassword",
+                      required
+                    )
+                  .mb-3
+                    label.form-label(for="passwordNew") New Password
+                    input#passwordNew.form-control(
+                      type="password",
+                      name="newPassword",
+                      required,
+                      minlength="8",
+                      pattern="^(?=.*[A-Za-z])(?=.*\\d).{8,}$"
+                    )
+                    .form-text Must be at least 8 characters with 1 letter and 1 number
+                  .mb-3
+                    label.form-label(for="passwordConfirm") Confirm Password
+                    input#passwordConfirm.form-control(
+                      type="password",
+                      name="confirmPassword",
+                      required
+                    )
+                  .d-grid.gap-2
+                    button.btn.btn-primary.btn--save-password(type="submit") Save Password
+
+        //- Danger Zone
+        .card.border-danger.mt-4
+          .card-header.bg-danger.text-white Danger Zone
+          .card-body
+            button.btn.btn-outline-danger(
+              type="button",
+              data-bs-toggle="modal",
+              data-bs-target="#deleteAccountModal"
+            ) Delete Account
+
+  //- Avatar Upload Modal
+  #avatarModal.modal.fade(tabindex="-1")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h5.modal-title Update Profile Photo
+          button.btn-close(type="button", data-bs-dismiss="modal")
+        form.form-avatar-upload(action="/account/avatar", method="POST", enctype="multipart/form-data")
+          .modal-body
+            .mb-3
+              input.form-control(
+                type="file",
+                name="photo",
+                id="photo",
+                accept="image/*",
+                required
+              )
+          .modal-footer
+            button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancel
+            button.btn.btn-primary.btn--save-photo(type="submit") Upload
+
+  //- Delete Account Modal
+  #deleteAccountModal.modal.fade(tabindex="-1")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h5.modal-title Confirm Account Deletion
+          button.btn-close(type="button", data-bs-dismiss="modal")
+        form.form-delete-account(action="/account/delete", method="POST")
+          .modal-body
+            p This action cannot be undone. All your data will be permanently deleted.
+            .mb-3
+              label.form-label(for="deletePassword") Enter your password to confirm:
+              input#deletePassword.form-control(
+                type="password",
+                name="password",
+                required
+              )
+          .modal-footer
+            button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cancel
+            button.btn.btn-danger.btn--delete-account(type="submit") Delete Account
