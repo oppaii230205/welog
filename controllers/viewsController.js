@@ -60,3 +60,9 @@ exports.getAccount = (req, res, next) => {
     // user: req.user // authController already set res.locals.user
   });
 };
+
+exports.getNewPostForm = (req, res, next) => {
+  res.status(200).render('new-post', {
+    title: 'Create Your Post'
+  });
+};

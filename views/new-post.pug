@@ -1,0 +1,93 @@
+extends layouts/main
+
+block content
+  .container.py-5
+    .row.justify-content-center
+      .col-lg-8
+        .card.border-0.shadow-lg
+          .card-header.bg-white.py-4
+            h2.mb-0.text-center
+              i.bi.bi-plus-circle.me-2
+              | Create New Post
+
+          .card-body.p-4.p-md-5
+            form.form-create-post(action="/posts", method="POST", enctype="multipart/form-data")
+              //- Cover Image Upload
+              .mb-4.text-center
+                .image-upload-container.mb-3
+                  label.cursor-pointer(for="coverImage")
+                    #image-preview.border.rounded.d-flex.align-items-center.justify-content-center(
+                      style="height: 250px; background-color: #f8f9fa; overflow: hidden"
+                    )
+                      if post && post.coverImage
+                        img.img-fluid(
+                          src=`/uploads/${post.coverImage}`,
+                          alt="Preview",
+                          style="object-fit: cover; height: 100%; width: 100%"
+                        )
+                      else
+                        .text-center.text-muted
+                          i.bi.bi-image(style="font-size: 3rem")
+                          p.mt-2 Click to upload cover image
+                  input#coverImage.d-none(
+                    type="file",
+                    name="coverImage",
+                    accept="image/*"
+                  )
+                small.form-text.text-muted Recommended size: 2000x1200 pixels
+
+              //- Title Input
+              .mb-4
+                label.form-label.fw-bold(for="title") Post Title
+                input#title.form-control.form-control-lg(
+                  type="text",
+                  name="title",
+                  placeholder="Enter a captivating title...",
+                  required
+                )
+
+              //- Content Editor
+              .mb-4
+                label.form-label.fw-bold(for="content") Your Story
+                textarea#content.form-control(
+                  name="content",
+                  rows="10",
+                  placeholder="Share your thoughts...",
+                  required
+                )
+                .form-text Format with Markdown
+
+              //- Tags/Categories
+              .mb-4
+                label.form-label.fw-bold(for="tags") Tags
+                input#tags.form-control(
+                  type="text",
+                  name="tags",
+                  placeholder="tech,webdev,design"
+                )
+                small.form-text Separate tags with commas
+
+              //- Publish Options
+              //- .mb-4
+              //-   label.form-label.fw-bold.mb-2 Status
+              //-   .form-check
+              //-     input#draft.form-check-input(
+              //-       type="radio",
+              //-       name="status",
+              //-       value="draft",
+              //-       checked
+              //-     )
+              //-     label.form-check-label(for="draft") Save as Draft
+              //-   .form-check
+              //-     input#published.form-check-input(
+              //-       type="radio",
+              //-       name="status",
+              //-       value="published"
+              //-     )
+              //-     label.form-check-label(for="published") Publish Now
+
+              //- Submit Button
+              .d-grid.gap-2
+                button.btn.btn-primary.btn-lg.btn--create-post(type="submit", id="submit-btn")
+                  i.bi.bi-upload.me-2
+                  | Create Post

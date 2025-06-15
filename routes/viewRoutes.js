@@ -9,5 +9,10 @@ router.get('/post/:slug', authController.isLoggedIn, viewsController.getPost);
 router.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
 router.get('/signup', authController.isLoggedIn, viewsController.getSignupForm);
 router.get('/me', authController.protect, viewsController.getAccount);
+router.get(
+  '/posts/new',
+  authController.protect,
+  viewsController.getNewPostForm
+);
 
 module.exports = router;

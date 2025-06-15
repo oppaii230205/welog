@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, 'A post muse have a title'],
+      required: [true, 'A post must have a title'],
       unique: true,
       trim: true,
       maxlength: [
@@ -28,13 +28,13 @@ const postSchema = new mongoose.Schema(
     coverImage: {
       type: String,
       required: [true, 'A post must have a cover image'],
-      default: 'default-post.jpg'
+      default: 'default.jpg'
     },
     // Child reference to User model
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-      // required: [true, 'A post must have an author'] //TODO:
+      ref: 'User',
+      required: [true, 'A post must have an author'] //TODO:
     },
     tags: [String],
     likes: [

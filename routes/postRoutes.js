@@ -10,7 +10,13 @@ router.use('/:postId/comments', commentRouter);
 router
   .route('/')
   .get(authController.protect, postController.getAllPosts)
-  .post(postController.createPost);
+  .post(
+    authController.protect,
+    postController.uploadCoverImage,
+    postController.resizeCoverImage,
+    postController.setAuthorId, // must after multer because it needs multer to have processed the request and create req.body
+    postController.createPost
+  );
 
 router
   .route('/:id')

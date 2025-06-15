@@ -5,15 +5,20 @@ import '@babel/polyfill';
 import { login, logout, signup } from './login';
 import { postComment, deleteComment, editComment } from './comment';
 import { updateSettings, deleteAccount } from './updateSettings';
+import { createPost } from './post';
 
 // DOM ELEMENTS
 const loginForm = document.querySelector('.form-login');
 const signupForm = document.querySelector('.form-signup');
+
 const commentForm = document.querySelector('.form-comment');
+
 const userProfileForm = document.querySelector('.form-profile');
 const userPasswordForm = document.querySelector('.form-password');
 const deleteAccountForm = document.querySelector('.form-delete-account');
 const avatarUploadForm = document.querySelector('.form-avatar-upload');
+
+const createPostForm = document.querySelector('.form-create-post');
 
 const logoutBtn = document.getElementById('logout');
 
@@ -215,5 +220,45 @@ if (avatarUploadForm) {
 
     saveBtn.disabled = false;
     saveBtn.textContent = 'Upload';
+  });
+}
+
+// ===== CREATE POST HANDLING =====
+if (createPostForm) {
+  createPostForm.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', document.getElementById('title').value);
+    formData.append('content', document.getElementById('content').value);
+
+    const tags = document
+      .getElementById('tags')
+      .value.split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag !== ''); // Remove empty tags
+
+    // console.log(tags);
+    // console.log(JSON.stringify(tags));
+    // formData.append('tags', tags);
+    tags.forEach(tag => formData.append('tags[]', tag)); // Right way to append array to FormData
+    // console.log(formData.getAll('tags[]')); // Debugging line to check tags
+
+    if (document.getElementById('coverImage').files[0]) {
+      formData.append(
+        'coverImage',
+        document.getElementById('coverImage').files[0]
+      );
+    }
+
+    const saveBtn = createPostForm.querySelector('.btn--create-post');
+    saveBtn.disabled = true;
+    saveBtn.innerHTML =
+      '<span class="spinner-border spinner-border-sm"></span> Creating...';
+
+    await createPost(formData);
+
+    saveBtn.dispabled = false;
+    saveBtn.textContent = 'Create Post';
   });
 }

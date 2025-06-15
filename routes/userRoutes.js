@@ -16,6 +16,8 @@ router.use(authController.protect);
 
 router.patch('/updateMyPassword', authController.updatePassword);
 
+// If there's a form data (multipart/form-data) request, multer will handle it and pass to the next middleware
+// Else, it will skip the multer middleware and go directly to the next one (just like a normal request with JSON body)
 router.patch(
   '/updateMe',
   userController.uploadUserPhoto,
