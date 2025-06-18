@@ -9,12 +9,11 @@ process.on('uncaughtException', err => {
   process.exit(1);
 });
 
-const app = require('./app');
-
+// Connect .env file to our application (must be before importing app.js in order to make 'morgan' work)
+dotenv.config({ path: './config.env' });
 const port = process.env.PORT || 3000;
 
-// Connect .env file to our application
-dotenv.config({ path: './config.env' });
+const app = require('./app');
 
 // Connect to MongoDB
 const DB = process.env.DATABASE.replace(
