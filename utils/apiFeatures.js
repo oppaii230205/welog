@@ -1,7 +1,7 @@
 class APIFeatures {
   constructor(query, queryString) {
     this.query = query;
-    this.queryString = queryString;
+    this.queryString = queryString; // actually the req.query object, not string
   }
 
   filter() {

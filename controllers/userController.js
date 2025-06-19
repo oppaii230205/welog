@@ -1,9 +1,10 @@
+const multer = require('multer');
+const sharp = require('sharp');
+
 const User = require('../models/User');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-
-const multer = require('multer');
-const sharp = require('sharp');
+const factory = require('./handlerFactory');
 
 // There's a image processing by sharp later, so we should use memoryStorage because
 // we don't need to save the file on disk before processing it.
@@ -104,34 +105,9 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
+exports.getAllUsers = factory.getAll(User);
 
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    data: {
-      users
-    }
-  });
-});
-
-exports.getUser = catchAsync(async (req, res, next) => {
-  const userId = req.params.id;
-
-  const user = await User.findById(userId);
-
-  if (!user) {
-    return next(new AppError('No user found with that ID', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user
-    }
-  });
-});
+exports.getUser = factory.getOne(User);
 
 exports.createUser = (req, res) => {
   res.status(500).json({
@@ -140,37 +116,6 @@ exports.createUser = (req, res) => {
   });
 };
 
-exports.updateUser = catchAsync(async (req, res, next) => {
-  const userId = req.params.id;
+exports.updateUser = factory.updateOne(User);
 
-  const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
-    new: true,
-    runValidators: true
-  });
-
-  if (!updatedUser) {
-    return next(new AppError('No user found with that ID', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user: updatedUser
-    }
-  });
-});
-
-exports.deleteUser = catchAsync(async (req, res, next) => {
-  const userId = req.params.id;
-
-  const user = await User.findByIdAndDelete(userId);
-
-  if (!user) {
-    return next(new AppError('No user found with that ID', 404));
-  }
-
-  res.status(204).json({
-    status: 'success',
-    data: null
-  });
-});
+exports.deleteUser = factory.deleteOne(User);

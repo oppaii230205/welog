@@ -4,6 +4,7 @@ const sharp = require('sharp');
 const Post = require('../models/Post');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const factory = require('./handlerFactory');
 
 const multerStorage = multer.memoryStorage();
 const multerFilter = (req, file, cb) => {
@@ -32,38 +33,10 @@ exports.resizeCoverImage = catchAsync(async (req, res, next) => {
     .jpeg({ quality: 90 })
     .toFile(`public/img/posts/${req.file.filename}`);
 
+  // Save the filename to the post object
+  req.body.coverImage = req.file.filename; // will be used in the createPost method
+
   next();
-});
-
-exports.getAllPosts = catchAsync(async (req, res, next) => {
-  const posts = await Post.find();
-
-  res.status(200).json({
-    status: 'success',
-    results: posts.length,
-    data: {
-      posts
-    }
-  });
-});
-
-exports.getPost = catchAsync(async (req, res, next) => {
-  const postId = req.params.id;
-
-  const post = await Post.findById(postId).populate({
-    path: 'comments'
-  });
-
-  if (!post) {
-    return next(new AppError('No post found with that ID', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      post
-    }
-  });
 });
 
 exports.setAuthorId = (req, res, next) => {
@@ -72,48 +45,14 @@ exports.setAuthorId = (req, res, next) => {
   next();
 };
 
-exports.createPost = catchAsync(async (req, res, next) => {
-  if (req.file) {
-    req.body.coverImage = req.file.filename;
-  }
+exports.getAllPosts = factory.getAll(Post);
 
-  const newPost = await Post.create(req.body);
-
-  res.status(201).json({
-    status: 'success',
-    data: {
-      post: newPost
-    }
-  });
+exports.getPost = factory.getOne(Post, {
+  path: 'comments'
 });
 
-exports.updatePost = catchAsync(async (req, res, next) => {
-  const post = await Post.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true
-  });
+exports.createPost = factory.createOne(Post);
 
-  if (!post) {
-    return next(new AppError('No post found with that ID', 404));
-  }
+exports.updatePost = factory.updateOne(Post);
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      post
-    }
-  });
-});
-
-exports.deletePost = catchAsync(async (req, res, next) => {
-  const post = await Post.findByIdAndDelete(req.params.id);
-
-  if (!post) {
-    return next(new AppError('No post found with that ID', 404));
-  }
-
-  res.status(204).json({
-    status: 'success',
-    data: null
-  });
-});
+exports.deletePost = factory.deleteOne(Post);
